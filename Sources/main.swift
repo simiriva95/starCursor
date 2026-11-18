@@ -194,6 +194,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         HotKeys.register()
         TrailEngine.shared.start()
+        GestureSampler.shared.start()
     }
 
     func buildPanels() {

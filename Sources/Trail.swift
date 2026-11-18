@@ -178,14 +178,9 @@ final class TrailEngine {
         mouse = NSEvent.mouseLocation
         clicks(d, now: now)
 
-        // gesture capture: modifier held alone => record, release => recognize
-        let flags = NSEvent.modifierFlags.intersection([.command, .option, .control, .shift])
-        if d.bool(forKey: "gestures") && flags == Gestures.modifier {
-            gesture = (gesture ?? []) + [mouse]
-        } else if let g = gesture {
-            gesture = nil
-            Gestures.shared.finish(g)
-        }
+        // gesture points come from GestureSampler (own queue); here we only mirror them for drawing
+        let primaryH = NSScreen.screens.first?.frame.height ?? 0
+        gesture = GestureSampler.shared.current?.map { CGPoint(x: $0.x, y: primaryH - $0.y) }
 
         if d.bool(forKey: "enabled") {
             let follow = d.double(forKey: "follow")

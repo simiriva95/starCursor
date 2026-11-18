@@ -81,6 +81,48 @@ enum Recognizer {
     }
 }
 
+// MARK: - Sampler
+// Reads cursor + modifiers on its own queue at 250 Hz, so a slow trail frame on the main thread
+// can't drop or merge gesture points (that distorted letters into "No match").
+
+final class GestureSampler {
+    static let shared = GestureSampler()
+    private let queue = DispatchQueue(label: "starcursor.gestures", qos: .userInteractive)
+    private let lock = NSLock()
+    private var timer: DispatchSourceTimer?
+    private var stroke: [CGPoint]?          // CG global coords (y down)
+
+    func start() {
+        let t = DispatchSource.makeTimerSource(queue: queue)
+        t.schedule(deadline: .now(), repeating: .milliseconds(4))
+        t.setEventHandler { [weak self] in self?.sample() }
+        t.resume()
+        timer = t
+    }
+
+    /// Current stroke for display, in CG coords.
+    var current: [CGPoint]? { lock.lock(); defer { lock.unlock() }; return stroke }
+
+    private func sample() {
+        let raw = CGEventSource.flagsState(.combinedSessionState)
+        let flags = NSEvent.ModifierFlags(rawValue: UInt(raw.rawValue)).intersection([.command, .option, .control, .shift])
+        let held = UserDefaults.standard.bool(forKey: "gestures") && flags == Gestures.modifier
+        lock.lock()
+        if held, let p = CGEvent(source: nil)?.location {
+            stroke = (stroke ?? []) + [p]
+            lock.unlock()
+        } else if let done = stroke {
+            stroke = nil
+            lock.unlock()
+            // flip y to AppKit orientation; the recognizer is translation-invariant so the offset doesn't matter
+            let pts = done.map { CGPoint(x: $0.x, y: -$0.y) }
+            DispatchQueue.main.async { Gestures.shared.finish(pts) }
+        } else {
+            lock.unlock()
+        }
+    }
+}
+
 // MARK: - Store + dispatcher
 
 final class Gestures: ObservableObject {
