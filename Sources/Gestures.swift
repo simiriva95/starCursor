@@ -119,7 +119,7 @@ final class Gestures: ObservableObject {
             return
         }
         guard let (b, d) = Recognizer.best(g, in: bindings), d < Recognizer.threshold else {
-            TrailEngine.shared.showFlash("?")
+            TrailEngine.shared.showFlash("No match")
             return
         }
         TrailEngine.shared.showFlash("\(b.letter) · \(b.action.label)")
@@ -128,6 +128,10 @@ final class Gestures: ObservableObject {
 
     func run(_ b: GestureBinding) {
         let p = b.param.trimmingCharacters(in: .whitespaces)
+        if p.isEmpty, b.action.paramHint != nil, b.action != .quitApp {
+            TrailEngine.shared.showFlash("\(b.letter) · \(b.action.label): set a value in Settings")
+            return
+        }
         switch b.action {
         case .openApp: shell("/usr/bin/open", "-a", p)
         case .quitApp:

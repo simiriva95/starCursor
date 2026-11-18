@@ -155,9 +155,15 @@ struct SettingsView: View {
                         }
                         Button(role: .destructive) { store.bindings.removeAll { $0.id == b.id } } label: { Image(systemName: "trash") }
                             .buttonStyle(.borderless)
+                            .accessibilityLabel("Delete letter \(b.letter)")
+                            .help("Delete letter")
                     }
                 }
-                Button("Add letter") { store.bindings.append(GestureBinding(letter: "?")) }
+                Button("Add letter") {
+                    let used = Set(store.bindings.map { $0.letter.uppercased() })
+                    let next = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".map(String.init).first { !used.contains($0) } ?? "A"
+                    store.bindings.append(GestureBinding(letter: next))
+                }
             }
         }
         .formStyle(.grouped)

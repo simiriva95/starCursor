@@ -245,7 +245,7 @@ final class TrailEngine {
         if d.bool(forKey: "halo") || !ripples.isEmpty { dirty = dirty.union(CGRect(origin: mouse, size: .zero)).union(lastMouseRect) }
         for rp in ripples { dirty = dirty.union(CGRect(x: rp.p.x - 80, y: rp.p.y - 80, width: 160, height: 160)) }
         for p in gesture ?? [] { dirty = dirty.union(CGRect(origin: p, size: .zero)) }
-        if let f = flash { dirty = dirty.union(CGRect(x: f.at.x, y: f.at.y - 20, width: 320, height: 60)) }
+        if let f = flash { dirty = dirty.union(CGRect(x: f.at.x, y: f.at.y - 20, width: 560, height: 60)) }
         if !dirty.isNull {
             var m = d.double(forKey: "width") + d.double(forKey: "glow") * 2 + 30
             if Effect.current == .gif { m = max(m, d.double(forKey: "gifSize") * 1.5 + 20) }
