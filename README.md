@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" width="720" alt="StarCursor demo: neon trails with glitter, sparks, confetti, snow, bubbles, emoji, click ripples and spotlight">
+  <img src="docs/demo.gif" width="720" alt="StarCursor demo: neon trails with glitter, sparks, confetti, snow, bubbles, emoji, GIF mode, click ripples, letter gestures, hotkeys, high contrast and spotlight">
 </p>
 
 <p align="center"><a href="docs/demo.mp4">▶︎ Watch the full-quality video (MP4)</a></p>
