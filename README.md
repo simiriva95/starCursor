@@ -98,6 +98,11 @@ defaults delete io.github.simiriva95.starcursor
 - **Letter gestures:** in Settings → *Letter gestures*, add a letter, choose an action, click **Train** and draw the letter 3 times while holding <kbd>⌥</kbd>. From then on: hold <kbd>⌥</kbd>, draw, release.
 - **GIF mode:** Settings → *Particles* → Effect **GIF** → **Choose…**
 
+<p align="center">
+  <img src="docs/settings-trail.png" width="400" alt="StarCursor settings: trail preset and sliders, particle effect, click ripples, halo and spotlight">
+  <img src="docs/settings-gestures.png" width="400" alt="StarCursor settings: letter gestures with trained letters and their actions">
+</p>
+
 ## How it works
 
 - A transparent, click-through `NSPanel` per display at screen-saver level. A 120 Hz loop polls `NSEvent.mouseLocation` and repaints only the dirty region with Core Graphics (glow comes from a shadowed transparency layer).
