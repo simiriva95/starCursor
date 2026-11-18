@@ -4,7 +4,7 @@
 set -e
 cd "$(dirname "$0")"
 APP=StarCursor.app
-VERSION=1.0.1
+VERSION=1.0.2
 TMP=$(mktemp -d)
 rm -rf "$APP" && mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 for arch in arm64 x86_64; do
