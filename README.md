@@ -5,6 +5,10 @@
 <h1 align="center">StarCursor</h1>
 
 <p align="center">
+  <a href="https://github.com/simiriva95/starCursor/releases/latest"><img src="https://img.shields.io/github/v/release/simiriva95/starCursor?label=release&color=8a2be2" alt="Latest release"></a>
+</p>
+
+<p align="center">
   <b>A free, open-source neon cursor trail for macOS.</b><br>
   Glowing trails, glitter, confetti, GIFs, click ripples, a presenter spotlight and letter gestures.<br>
   One small native app. No account, no network, no tracking.
