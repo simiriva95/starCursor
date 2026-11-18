@@ -1,0 +1,4 @@
+*.app/
+*.zip
+docs/demo.mov
+.DS_Store
